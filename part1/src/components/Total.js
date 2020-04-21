@@ -5,7 +5,7 @@ const Total = (props) => {
     <>
       <p>
         Number of excercises{" "}
-        {props.excercises1 + props.excercises2 + props.excercises3}
+        {props.part1.excercises + props.part2.excercises + props.part3.excercises}
       </p>
     </>
   );
