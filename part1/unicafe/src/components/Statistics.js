@@ -1,4 +1,5 @@
 import React from "react";
+import Statistic from "./Statistic";
 
 const Statistics = ({ good, neutral, bad }) => {
   if (good === 0 && neutral === 0 && bad === 0) {
@@ -11,15 +12,16 @@ const Statistics = ({ good, neutral, bad }) => {
   let all = good + neutral + bad;
   let average = (good * 1 + neutral * 0 + bad * -1) / all;
   let positive = (good * 100) / all;
+  positive = positive + " %";
 
   return (
     <>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
-      <p>all: {all}</p>
-      <p>average: {average}</p>
-      <p>positive: {positive} %</p>
+      <Statistic text="good" value={good} />
+      <Statistic text="neutral" value={neutral} />
+      <Statistic text="bad" value={bad} />
+      <Statistic text="all" value={all} />
+      <Statistic text="average" value={average} />
+      <Statistic text="positive" value={positive} />
     </>
   );
 };
