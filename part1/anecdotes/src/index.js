@@ -4,6 +4,15 @@ import Button from "./components/Button";
 
 const App = (props) => {
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState(
+    Array.apply(null, new Array(6)).map(Number.prototype.valueOf, 0)
+  );
+
+  const handleVoteClick = () => {
+    const copy = [...points];
+    copy[selected] += 1;
+    setPoints(copy);
+  };
 
   const handleRandomClick = () => {
     setSelected(Math.floor(Math.random() * 6));
@@ -12,6 +21,8 @@ const App = (props) => {
   return (
     <>
       <div>{props.anecdotes[selected]}</div>
+      <p>has {points[selected]} votes</p>
+      <Button handleClick={handleVoteClick} text="vote" />
       <Button handleClick={handleRandomClick} text="next anecdote" />
     </>
   );
