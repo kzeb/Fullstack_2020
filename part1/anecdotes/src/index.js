@@ -8,6 +8,8 @@ const App = (props) => {
     Array.apply(null, new Array(6)).map(Number.prototype.valueOf, 0)
   );
 
+  const max = points.indexOf(Math.max(...points));
+
   const handleVoteClick = () => {
     const copy = [...points];
     copy[selected] += 1;
@@ -20,10 +22,14 @@ const App = (props) => {
 
   return (
     <>
+      <h2>Anecdote of the day</h2>
       <div>{props.anecdotes[selected]}</div>
       <p>has {points[selected]} votes</p>
       <Button handleClick={handleVoteClick} text="vote" />
       <Button handleClick={handleRandomClick} text="next anecdote" />
+      <h2>Anecdote with most votes</h2>
+      <div>{props.anecdotes[max]}</div>
+      <p>has {points[max]} votes</p>
     </>
   );
 };
