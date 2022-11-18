@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import Course from "./components/Course";
 
 const App = () => {
-  const courses = [
+  const coursesArray = [
     {
       name: "Half Stack application development",
       id: 1,
@@ -47,13 +47,50 @@ const App = () => {
       ],
     },
   ];
+  const [courses, setCourses] = useState(coursesArray);
+  const [newCourse, setNewCourse] = useState("a new course...");
+  const [showAll, setShowAll] = useState(true);
+
+  const addCourse = (event) => {
+    event.preventDefault();
+    const courseObject = {
+      name: newCourse,
+      id: courses.length + 1,
+      parts: [],
+    };
+
+    setCourses(courses.concat(courseObject));
+    setNewCourse("");
+    // console.log("button clicked", event.target);
+  };
+
+  const handleCourseChange = (event) => {
+    console.log(event.target.value);
+    setNewCourse(event.target.value);
+  };
+
+  const coursesToShow = showAll
+    ? courses
+    : courses.filter((course) => course.name === "test");
 
   return (
-    <>
-      {courses.map((course) => (
-        <Course key={course.id} course={course} />
-      ))}
-    </>
+    <div>
+      <h1>Courses</h1>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? "test" : "all"}
+        </button>
+      </div>
+      <ul>
+        {coursesToShow.map((course) => (
+          <Course key={course.id} course={course} />
+        ))}
+      </ul>
+      <form onSubmit={addCourse}>
+        <input value={newCourse} onChange={handleCourseChange} />
+        <button type="submit">save</button>
+      </form>
+    </div>
   );
 };
 
