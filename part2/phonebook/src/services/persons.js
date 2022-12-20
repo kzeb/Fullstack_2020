@@ -11,6 +11,11 @@ const create = (newObject) => {
   return request.then((response) => response.data);
 };
 
-const result = { getAll, create };
+const remove = (id) => {
+  let url = `${baseUrl}/${id}`;
+  return axios.delete(url);
+};
+
+const result = { getAll, create, remove };
 
 export default result;

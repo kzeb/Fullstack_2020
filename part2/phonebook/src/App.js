@@ -66,7 +66,7 @@ const App = () => {
         handleNewNumberChange={handleNewNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons searchResult={searchResult} />
+      <Persons searchResult={searchResult} setSearchResult={setSearchResult} />
     </div>
   );
 };
