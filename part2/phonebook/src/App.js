@@ -3,6 +3,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import Notification from "./components/Notification";
+import ErrorMessage from "./components/ErrorMessage";
 import personService from "./services/persons";
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [searchResult, setSearchResult] = useState(persons);
   const [notification, setNotification] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personService.getAll().then((initialPersons) => {
@@ -32,19 +34,35 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        personService.update(repeat.id, personObject).then((returnedPerson) => {
-          personService.getAll().then((initialPersons) => {
-            console.log(initialPersons);
-            setSearchResult(initialPersons);
-            setPersons(initialPersons);
-            setNewName("");
-            setNewNumber("");
-            setNotification(`Updated number of ${personObject.name}`);
+        personService
+          .update(repeat.id, personObject)
+          .then((returnedPerson) => {
+            personService.getAll().then((initialPersons) => {
+              console.log(initialPersons);
+              setSearchResult(initialPersons);
+              setPersons(initialPersons);
+              setNewName("");
+              setNewNumber("");
+              setNotification(`Updated number of ${personObject.name}`);
+              setTimeout(() => {
+                setNotification(null);
+              }, 3000);
+            });
+          })
+          .catch((error) => {
+            setErrorMessage(
+              `Information of ${personObject.name} has already been removed from server`
+            );
             setTimeout(() => {
-              setNotification(null);
-            }, 3000);
+              setErrorMessage(null);
+            }, 5000);
+            personService.getAll().then((initialPersons) => {
+              setSearchResult(initialPersons);
+              setPersons(initialPersons);
+              setNewName("");
+              setNewNumber("");
+            });
           });
-        });
       }
     } else {
       personService.create(personObject).then((returnedPerson) => {
@@ -82,6 +100,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={notification} />
+      <ErrorMessage message={errorMessage} />
       <Filter handleSearchInputChange={handleSearchInputChange} />
       <h2>Add a new</h2>
       <PersonForm
