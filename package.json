@@ -1,0 +1,20 @@
+{
+  "name": "notes-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "part3/notes-backend/index.js",
+  "scripts": {
+    "start": "node part3/notes-backend/index.js",
+    "dev": "nodemon part3/notes-backend/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karol Żebrowski",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
