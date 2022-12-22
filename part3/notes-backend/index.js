@@ -1,4 +1,4 @@
-// require("dotenv").config();
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -7,6 +7,10 @@ const Note = require("./models/note");
 app.use(cors());
 app.use(express.json());
 app.use(express.static("part3/notes-backend/build"));
+
+app.get("/", (request, response) => {
+  response.send("<h1>Hello World!</h1>");
+});
 
 app.get("/api/notes", (request, response) => {
   Note.find({}).then((notes) => {
