@@ -65,16 +65,24 @@ const App = () => {
           });
       }
     } else {
-      personService.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setSearchResult(searchResult.concat(returnedPerson));
-        setNewName("");
-        setNewNumber("");
-        setNotification(`Added ${personObject.name}`);
-        setTimeout(() => {
-          setNotification(null);
-        }, 3000);
-      });
+      personService
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setSearchResult(searchResult.concat(returnedPerson));
+          setNewName("");
+          setNewNumber("");
+          setNotification(`Added ${personObject.name}`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 3000);
+        })
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        });
     }
   };
 
